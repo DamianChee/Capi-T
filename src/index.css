@@ -13,10 +13,50 @@ body {
   background-color: whitesmoke;
 }
 
+html,
+body {
+  background: rgb(5, 25, 55);
+  background: -moz-linear-gradient(
+    90deg,
+    rgba(5, 25, 55, 1) 0%,
+    rgba(0, 60, 83, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    90deg,
+    rgba(5, 25, 55, 1) 0%,
+    rgba(0, 60, 83, 1) 100%
+  );
+  background: linear-gradient(
+    90deg,
+    rgba(5, 25, 55, 1) 0%,
+    rgba(0, 60, 83, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#051937",endColorstr="#003c53",GradientType=1);
+
+  color: whitesmoke;
+}
+
 .centered {
   margin: 3rem auto;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#body {
+  min-height: 80vh;
+}
+
+.colored-circle {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: -2px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0.5px;
+  border-color: black;
+  height: 20px;
+  width: 20px;
 }
