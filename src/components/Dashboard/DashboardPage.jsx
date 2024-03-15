@@ -1,14 +1,21 @@
 import React from "react";
 import AgentDetails from "./AgentDetails";
+import { useAuth } from "../Context/AuthContext";
 
 const DashboardPage = () => {
+  const { isLoggedIn } = useAuth();
+
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <AgentDetails />
+      {isLoggedIn ? (
+        <div className="row">
+          <div className="col-md-12">
+            <AgentDetails />
+          </div>
         </div>
-      </div>
+      ) : (
+        "[ Dashboard ] Not Logged In Yet"
+      )}
     </div>
   );
 };

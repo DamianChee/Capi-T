@@ -82,3 +82,9 @@ body {
   /* min-width: 30vw; */
   max-width: 30vw;
 }
+
+.shipComponent {
+  border: 3px solid blue;
+  /* min-width: 30vw; */
+  max-width: 30vw;
+}

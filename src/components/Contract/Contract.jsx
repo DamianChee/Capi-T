@@ -112,9 +112,13 @@ const Contract = ({ props }) => {
             <br />
           </div>
           <div className="col-sm-4" />
-          <button className="col-sm-4" onClick={acceptContract}>
-            Accept
-          </button>
+          {!contract.accepted ? (
+            <button className="col-sm-4" onClick={acceptContract}>
+              Accept
+            </button>
+          ) : (
+            ""
+          )}
           <div className="col-sm-4" />
         </div>
       )}

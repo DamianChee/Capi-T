@@ -41,19 +41,15 @@ const AgentDetails = () => {
    ****************************************************************************/
   return (
     <div className="container">
-      {userInfo.accountId ? (
-        <div className="row">
-          <label className="col-sm-12">Account ID: {userInfo.accountId}</label>
-          <label className="col-sm-12">Name: {userInfo.symbol}</label>
-          <label className="col-sm-12">Credits: {userInfo.credits}</label>
-          <label className="col-sm-12">
-            Headquarters: {userInfo.headquarters}
-          </label>
-          <label className="col-sm-12">Ships: {userInfo.shipCount}</label>
-        </div>
-      ) : (
-        "[ Dashboard ] Not Logged In Yet"
-      )}
+      <div className="row">
+        <label className="col-sm-12">Account ID: {userInfo.accountId}</label>
+        <label className="col-sm-12">Name: {userInfo.symbol}</label>
+        <label className="col-sm-12">Credits: {userInfo.credits}</label>
+        <label className="col-sm-12">
+          Headquarters: {userInfo.headquarters}
+        </label>
+        <label className="col-sm-12">Ships: {userInfo.shipCount}</label>
+      </div>
     </div>
   );
 };

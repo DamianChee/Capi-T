@@ -4,7 +4,7 @@ import Contract from "./Contract";
 
 const ContractPage = () => {
   const { isLoggedIn, token } = useAuth();
-  const [contracts, setContracts] = useState([{}]);
+  const [contracts, setContracts] = useState([]);
 
   const contractURL = "https://api.spacetraders.io/v2/my/contracts";
   const contractFetchOptions = {
@@ -21,8 +21,6 @@ const ContractPage = () => {
       const res = await fetch(contractURL, contractFetchOptions);
       const data = await res.json();
       if (res.ok) {
-        console.log(data.data);
-        console.log(isLoggedIn);
         setContracts(data.data);
       }
     } catch (error) {
@@ -30,22 +28,24 @@ const ContractPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   getContracts();
-  // }, [isLoggedIn]);
-
   return (
     <div className="container">
-      <button onClick={getContracts}>Get Contracts</button>
       {isLoggedIn ? (
         <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
+          <div className="col-md-1" />
+          <div className="col-md-10">
             {contracts.map((item, idx) => (
               <Contract props={item} key={idx} />
             ))}
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-1" />
+          {contracts.length === 0 ? (
+            <button className="col-md-12" onClick={getContracts}>
+              Get Contracts
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         "[ Contracts ] Not Logged In Yet"
