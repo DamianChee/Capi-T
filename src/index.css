@@ -44,6 +44,12 @@ body {
   align-items: center;
 }
 
+#header,
+#body,
+#footer {
+  border: 2px solid yellow;
+}
+
 #body {
   min-height: 80vh;
 }
@@ -59,4 +65,20 @@ body {
   border-color: black;
   height: 20px;
   width: 20px;
+}
+
+.component {
+  border: 3px solid blueviolet;
+}
+
+.loginRegisterComponent {
+  border: 3px solid blue;
+  /* min-width: 30vw; */
+  max-width: 30vw;
+}
+
+.contractComponent {
+  border: 3px solid blue;
+  /* min-width: 30vw; */
+  max-width: 30vw;
 }
