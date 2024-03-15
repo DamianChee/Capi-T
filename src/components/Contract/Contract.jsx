@@ -48,7 +48,7 @@ const Contract = ({ props }) => {
   });
 
   return (
-    <div className="container contractComponent">
+    <div className="container component">
       {contract.id && (
         <div className="row">
           <div className="col-sm-12">Contract ID: {contract.id}</div>

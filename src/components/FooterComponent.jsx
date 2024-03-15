@@ -22,7 +22,7 @@ const FooterComponent = () => {
   }, []);
 
   return (
-    <div id="footer" className="container mt-auto">
+    <div id="footer" className="component container mt-auto">
       Server Status
       {serverStatus ? (
         <StatusCircle color="mediumseagreen" />

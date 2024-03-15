@@ -76,7 +76,7 @@ const LoginComponent = () => {
    *
    ****************************************************************************/
   return (
-    <div className="row loginRegisterComponent">
+    <div className="row component">
       {/* Component Title */}
       <label className="col-md-12">Login</label>
 

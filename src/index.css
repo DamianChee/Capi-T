@@ -67,23 +67,11 @@ body {
   width: 20px;
 }
 
-.component {
+.page {
   border: 3px solid blueviolet;
 }
 
-.loginRegisterComponent {
-  border: 3px solid blue;
-  /* min-width: 30vw; */
-  max-width: 30vw;
-}
-
-.contractComponent {
-  border: 3px solid blue;
-  /* min-width: 30vw; */
-  max-width: 30vw;
-}
-
-.shipComponent {
+.component {
   border: 3px solid blue;
   /* min-width: 30vw; */
   max-width: 30vw;

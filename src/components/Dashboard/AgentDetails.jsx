@@ -40,7 +40,7 @@ const AgentDetails = () => {
    *
    ****************************************************************************/
   return (
-    <div className="container">
+    <div className="container component">
       <div className="row">
         <label className="col-sm-12">Account ID: {userInfo.accountId}</label>
         <label className="col-sm-12">Name: {userInfo.symbol}</label>

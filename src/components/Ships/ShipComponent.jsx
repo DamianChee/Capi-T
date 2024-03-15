@@ -43,11 +43,13 @@ const ShipComponent = ({ props }) => {
   });
 
   return (
-    <div className="container shipComponent">
+    <div className="container component">
       <div className="row">
         <div className="col-sm-12">Name: {ship.symbol}</div>
         <div className="col-sm-12">Status: {ship.nav.status}</div>
         <div className="col-sm-12">Flight mode: {ship.nav.flightMode}</div>
+        <div className="col-sm-12">System: {ship.nav.systemSymbol}</div>
+        <div className="col-sm-12">Waypoint: {ship.nav.waypointSymbol}</div>
         <div className="col-sm-12">Fuel: {ship.fuel.current}</div>
         <div className="col-sm-12">Fuel capacity: {ship.fuel.capacity}</div>
         <div className="col-sm-12">Cargo capacity: {ship.cargo.capacity}</div>
