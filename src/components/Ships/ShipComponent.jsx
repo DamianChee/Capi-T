@@ -38,6 +38,31 @@ const ShipComponent = ({ props }) => {
     fuel: { current: 0, capacity: 0, consumed: { amount: 0, timestamp: "" } },
   });
 
+  const navigateShipURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/navigate`;
+  const navigateShipFetchOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      waypointSymbol: "X1-M62-ZC5C",
+    }),
+  };
+
+  const navigateShip = async () => {
+    try {
+      const res = await fetch(navigateShipURL, navigateShipFetchOptions);
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log("an error occurred in navigateShip " + error);
+    }
+  };
+
   useEffect(() => {
     setShip(props);
   });
@@ -56,12 +81,31 @@ const ShipComponent = ({ props }) => {
         <div className="col-sm-12">Cargo:{ship.crew.current}</div>
         <div className="col-sm-12">Crew required: {ship.crew.required}</div>
         <div className="col-sm-12">Crew capacity: {ship.crew.capacity}</div>
+
+        <div className="col-sm-12 container">
+          Route:
+          <div className="row">
+            <div className="col-sm-12">
+              Destination: {ship.nav.route.destination.symbol}
+            </div>
+            <div className="col-sm-12">
+              Origin: {ship.nav.route.origin.symbol}
+            </div>
+            <div className="col-sm-12">
+              Departure: {ship.nav.route.departureTime}
+            </div>
+            <div className="col-sm-12">Arrival: {ship.nav.route.arrival}</div>
+          </div>
+        </div>
         <div className="col-sm-12">
           Extract Cooldown Time: {ship.cooldown.totalSeconds}
         </div>
         <div className="col-sm-12">
           Extract Cooldown Remaining: {ship.cooldown.remainingSeconds}
         </div>
+        <button className="col-sm-12" onClick={navigateShip}>
+          Navigate Ship to Asteroid
+        </button>
       </div>
     </div>
   );

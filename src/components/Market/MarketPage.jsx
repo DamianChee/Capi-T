@@ -4,7 +4,7 @@ import { useAuth } from "../Context/AuthContext";
 const MarketPage = () => {
   const { isLoggedIn, token } = useAuth();
   const marketplaceSearchURL =
-    "https://api.spacetraders.io/v2/systems/X1-M62/waypoints?traits=MARKETPLACE";
+    "https://api.spacetraders.io/v2/systems/X1-MC5/waypoints?traits=MARKETPLACE";
   const marketplaceSearchFetchOptions = {
     method: "GET",
     headers: {
