@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../Context/AuthContext";
 
-const ShipComponent = ({ props }) => {
+const ShipComponent = ({ props, getShips }) => {
+  const { token } = useAuth();
   const [ship, setShip] = useState({
     symbol: "",
     registration: { name: "", factionSymbol: "", role: "" },
@@ -47,7 +49,7 @@ const ShipComponent = ({ props }) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      waypointSymbol: "X1-M62-ZC5C",
+      waypointSymbol: "X1-MC5-AF5D",
     }),
   };
 
@@ -57,9 +59,105 @@ const ShipComponent = ({ props }) => {
       const data = await res.json();
       if (res.ok) {
         console.log(data);
+        getShips();
       }
     } catch (error) {
       console.log("an error occurred in navigateShip " + error);
+    }
+  };
+
+  const orbitShipURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/orbit`;
+  const orbitFetchOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  const orbitShip = async () => {
+    try {
+      const res = await fetch(orbitShipURL, orbitFetchOptions);
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        getShips();
+      }
+    } catch (error) {
+      console.log("an error occurred in orbitShip " + error);
+    }
+  };
+
+  const dockShipURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/dock`;
+  const dockFetchOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  const dockShip = async () => {
+    try {
+      const res = await fetch(dockShipURL, dockFetchOptions);
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        getShips();
+      }
+    } catch (error) {
+      console.log("an error occurred in dockShip " + error);
+    }
+  };
+
+  const extractURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/extract`;
+  const extractFetchOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  const extractGoods = async () => {
+    try {
+      const res = await fetch(extractURL, extractFetchOptions);
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        getShips();
+      } else {
+        console.log(data);
+        getShips();
+      }
+    } catch (error) {
+      console.log("an error occurred in extractGoods " + error);
+    }
+  };
+
+  const refuelURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/refuel`;
+  const refuelFetchOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  const refuelShip = async () => {
+    try {
+      const res = await fetch(refuelURL, refuelFetchOptions);
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data);
+        getShips();
+      }
+    } catch (error) {
+      console.log("an error occurred in refuelShip " + error);
     }
   };
 
@@ -105,6 +203,18 @@ const ShipComponent = ({ props }) => {
         </div>
         <button className="col-sm-12" onClick={navigateShip}>
           Navigate Ship to Asteroid
+        </button>
+        <button className="col-sm-12" onClick={orbitShip}>
+          Send ship to orbit
+        </button>
+        <button className="col-sm-12" onClick={dockShip}>
+          Dock ship
+        </button>
+        <button className="col-sm-12" onClick={refuelShip}>
+          Refuel Ship (Must be docked)
+        </button>
+        <button className="col-sm-12" onClick={extractGoods}>
+          Extract (Must be in orbit)
         </button>
       </div>
     </div>

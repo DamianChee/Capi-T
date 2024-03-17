@@ -41,7 +41,7 @@ const ShipsPage = () => {
             <div className="row">
               {ships.map((item, idx) => (
                 <div className="col-md-4" key={idx}>
-                  <ShipComponent props={item} />
+                  <ShipComponent props={item} getShips={getShips} />
                 </div>
               ))}
             </div>
