@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const Contract = ({ props }) => {
+const ContractComponent = ({ props }) => {
+  /*****************************************************************************
+   *
+   * Use States
+   *
+   ****************************************************************************/
   const [contract, setContract] = useState({
     id: "",
     type: "",
@@ -22,6 +27,11 @@ const Contract = ({ props }) => {
     deadlineToAccept: "",
   });
 
+  /*****************************************************************************
+   *
+   * URL and Options
+   *
+   ****************************************************************************/
   const contractAcceptURL = `https://api.spacetraders.io/v2/my/contracts/${contract.id}/accept`;
   const contractAcceptFetchOptions = {
     method: "POST",
@@ -33,6 +43,11 @@ const Contract = ({ props }) => {
     body: undefined,
   };
 
+  /*****************************************************************************
+   *
+   * Fetches
+   *
+   ****************************************************************************/
   const acceptContract = async () => {
     try {
       const res = await fetch(contractAcceptURL, contractAcceptFetchOptions);
@@ -43,10 +58,26 @@ const Contract = ({ props }) => {
     }
   };
 
+  /*****************************************************************************
+   *
+   * Input Handlers
+   *
+   ****************************************************************************/
+
+  /*****************************************************************************
+   *
+   * useEffect (onMount)
+   *
+   ****************************************************************************/
   useEffect(() => {
     setContract(props);
   });
 
+  /*****************************************************************************
+   *
+   * React stuffs
+   *
+   ****************************************************************************/
   return (
     <div className="container component">
       {contract.id && (
@@ -126,4 +157,4 @@ const Contract = ({ props }) => {
   );
 };
 
-export default Contract;
+export default ContractComponent;

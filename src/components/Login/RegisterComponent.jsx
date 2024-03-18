@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const RegisterComponent = () => {
+const RegisterComponent = ({ createAirtableRecord }) => {
   /*****************************************************************************
    *
    * Use States, Context & Variables
@@ -69,10 +69,19 @@ const RegisterComponent = () => {
 
   const registerAgent = async () => {
     try {
-      console.log(registerFetchOptions.body);
       const res = await fetch(registerFetchURL, registerFetchOptions);
       const data = await res.json();
-      if (res.ok) console.log(data);
+      if (res.ok) {
+        console.log(data.data);
+        createAirtableRecord(
+          data.data.agent.accountId,
+          data.data.agent.symbol,
+          data.data.faction.symbol,
+          data.data.token
+        );
+      } else {
+        console.log(data);
+      }
     } catch (error) {
       console.log("an error has occurred with registerAgent " + error);
     }

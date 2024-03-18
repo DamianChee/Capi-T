@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../Context/AuthContext";
 
-const AgentDetails = () => {
+const AgentComponent = () => {
   /*****************************************************************************
    *
    * Use States, Context & Variables
@@ -54,4 +54,4 @@ const AgentDetails = () => {
   );
 };
 
-export default AgentDetails;
+export default AgentComponent;
