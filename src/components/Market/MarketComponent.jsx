@@ -40,6 +40,21 @@ const MarketComponent = ({ props }) => {
     <div className="container component">
       <div className="row">
         <div className="col-sm-12 container">
+          Exchange:
+          <div className="row">
+            <div className="col-sm-1" />
+            <div className="col-sm-11">
+              {props.exchange.map((item, idx) => {
+                return (
+                  <div key={idx}>
+                    <div className="col-sm-12">{item.name}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="col-sm-12 container">
           Imports:
           <div className="row">
             <div className="col-sm-1" />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../Context/AuthContext";
 import ShipComponent from "./ShipComponent";
 
@@ -57,7 +57,9 @@ const ShipsPage = () => {
    * useEffect (onMount)
    *
    ****************************************************************************/
-
+  useEffect(() => {
+    getShips();
+  }, []);
   /*****************************************************************************
    *
    * React stuffs
@@ -68,8 +70,7 @@ const ShipsPage = () => {
     <div className="container">
       {isLoggedIn ? (
         <div className="row">
-          <div className="col-md-1" />
-          <div className="col-md-10 container">
+          <div className="col-md-12 container">
             <div className="row">
               {ships.map((item, idx) => (
                 <div className="col-md-4" key={idx}>
@@ -78,14 +79,6 @@ const ShipsPage = () => {
               ))}
             </div>
           </div>
-          <div className="col-md-1" />
-          {ships.length === 0 ? (
-            <button className="col-md-12" onClick={getShips}>
-              Get Ships
-            </button>
-          ) : (
-            ""
-          )}
         </div>
       ) : (
         "[ Ships ] Not Logged In Yet"

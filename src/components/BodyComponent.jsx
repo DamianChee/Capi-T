@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
-import LoginRegisterPage from "./Login/LoginRegisterPage";
-import ContractPage from "./Contract/ContractPage";
-import DashboardPage from "./Dashboard/DashboardPage";
-import ShipsPage from "./Ships/ShipsPage";
-import SystemsWaypointPage from "./SystemsWaypoint/SystemsWaypointPage";
-import ShipyardPage from "./Shipyard/ShipyardPage";
-import MarketPage from "./Market/MarketPage";
+import React, { useEffect, useState, Suspense } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import NavBar from "./Navbar/NavBar";
+import { useAuth } from "./Context/AuthContext";
+
+const LoginRegisterPage = React.lazy(() => import("./Login/LoginRegisterPage"));
+const ContractPage = React.lazy(() => import("./Contract/ContractPage"));
+const DashboardPage = React.lazy(() => import("./Dashboard/DashboardPage"));
+const ShipsPage = React.lazy(() => import("./Ships/ShipsPage"));
+const SystemsWaypointPage = React.lazy(() =>
+  import("./SystemsWaypoint/SystemsWaypointPage")
+);
+const ShipyardPage = React.lazy(() => import("./Shipyard/ShipyardPage"));
+const MarketPage = React.lazy(() => import("./Market/MarketPage"));
 
 const BodyComponent = () => {
+  const { isLoggedIn } = useAuth();
   const [data, setData] = useState([]);
 
   const getAirtable = async () => {
@@ -111,38 +118,36 @@ const BodyComponent = () => {
 
   return (
     <div id="body">
-      <div className="page">
-        [ LoginRegister Page ]
-        <LoginRegisterPage
-          createAirtableRecord={createAirtableRecord}
-          deleteAirtableRecord={deleteAirtableRecord}
-          data={data}
-        />
-      </div>
-      <div className="page">
-        [ Dashboard Page ]
-        <DashboardPage />
-      </div>
-      <div className="page">
-        [ Contract Page ]
-        <ContractPage />
-      </div>
-      <div className="page">
-        [ Ships Page ]
-        <ShipsPage />
-      </div>
-      <div className="page">
-        [ SystemsWaypoint Page ]
-        <SystemsWaypointPage />
-      </div>
-      <div className="page">
-        [ Shipyard Page ]
-        <ShipyardPage />
-      </div>
-      <div className="page">
-        [ Market Page ]
-        <MarketPage />
-      </div>
+      <Suspense fallback={<h1>loading...</h1>}>
+        <NavBar />
+        <hr />
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/main" />} />
+          {!isLoggedIn ? (
+            <Route
+              path="main"
+              element={
+                <LoginRegisterPage
+                  createAirtableRecord={createAirtableRecord}
+                  deleteAirtableRecord={deleteAirtableRecord}
+                  data={data}
+                />
+              }
+            />
+          ) : (
+            <Route path="main" element={<DashboardPage />} />
+          )}
+          {isLoggedIn && (
+            <>
+              <Route path="contract" element={<ContractPage />} />
+              <Route path="ships" element={<ShipsPage />} />
+              <Route path="map" element={<SystemsWaypointPage />} />
+              <Route path="shipyard" element={<ShipyardPage />} />
+              <Route path="market" element={<MarketPage />} />
+            </>
+          )}
+        </Routes>
+      </Suspense>
     </div>
   );
 };

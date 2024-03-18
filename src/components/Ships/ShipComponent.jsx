@@ -13,9 +13,7 @@ const ShipComponent = ({ props, getShips }) => {
   const waypointRef = useRef("");
   const cargoQtyRef = useRef(0);
   const cargoSymbolRef = useRef("");
-  const setIntervalIdRef = useRef();
 
-  const [timer, setTimer] = useState(0);
   const [cargoSymbol, setCargoSymbol] = useState("");
   const [cargoQty, setCargoQty] = useState(0);
 
@@ -146,6 +144,7 @@ const ShipComponent = ({ props, getShips }) => {
    ****************************************************************************/
 
   const navigateShip = async () => {
+    console.log(navigateShipFetchOptions.body);
     try {
       const res = await fetch(navigateShipURL, navigateShipFetchOptions);
       const data = await res.json();
@@ -311,87 +310,109 @@ const ShipComponent = ({ props, getShips }) => {
     <div className="container component">
       <div className="row">
         <div className="col-sm-12">Name: {ship.symbol}</div>
-        <div className="col-sm-12">Status: {ship.nav.status}</div>
-        <div className="col-sm-12">Flight mode: {ship.nav.flightMode}</div>
-        <div className="col-sm-12">System: {ship.nav.systemSymbol}</div>
-        <div className="col-sm-12">Waypoint: {ship.nav.waypointSymbol}</div>
-        <div className="col-sm-12">Fuel: {ship.fuel.current}</div>
-        <div className="col-sm-12">Fuel capacity: {ship.fuel.capacity}</div>
-        <div className="col-sm-12">Cargo capacity: {ship.cargo.capacity}</div>
-        <div className="col-sm-12">Cargo: {ship.cargo.units}</div>
-        <div className="col-sm-12">Crew required: {ship.crew.required}</div>
-        <div className="col-sm-12">Crew capacity: {ship.crew.capacity}</div>
 
-        <div className="col-sm-12 container">
-          Route:
-          <div className="row">
-            <div className="col-sm-12">
-              Destination: {ship.nav.route.destination.symbol}
-            </div>
-            <div className="col-sm-12">
-              Origin: {ship.nav.route.origin.symbol}
-            </div>
-            <div className="col-sm-12">
-              Departure: {ship.nav.route.departureTime}
-            </div>
-            <div className="col-sm-12">Arrival: {ship.nav.route.arrival}</div>
-          </div>
+        <div className="col-sm-12">[Status]</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Status: {ship.nav.status}</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Flight mode: {ship.nav.flightMode}</div>
+
+        <div className="col-sm-12">[Navigation]</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">System: {ship.nav.systemSymbol}</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Waypoint: {ship.nav.waypointSymbol}</div>
+
+        <div className="col-sm-12">[Fuel]</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Fuel: {ship.fuel.current}</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Fuel capacity: {ship.fuel.capacity}</div>
+
+        <div className="col-sm-12">[Cargo]</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Cargo capacity: {ship.cargo.capacity}</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Cargo: {ship.cargo.units}</div>
+
+        <div className="col-sm-12">[Crew]</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Crew required: {ship.crew.required}</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Crew capacity: {ship.crew.capacity}</div>
+
+        <div className="col-sm-12">[Route]</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">
+          Destination: {ship.nav.route.destination.symbol}
         </div>
-        <div className="col-sm-12">
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Origin: {ship.nav.route.origin.symbol}</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">
+          Departure: {ship.nav.route.departureTime}
+        </div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">Arrival: {ship.nav.route.arrival}</div>
+
+        <div className="col-sm-12">[Mining]</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11">
           Extract Cooldown Time: {ship.cooldown.totalSeconds}
         </div>
-        <div className="col-sm-12">
+        <div className="col-sm-1" />
+        <div className="col-sm-11">
           Extract Cooldown Remaining: {ship.cooldown.remainingSeconds}
         </div>
-        <div className="col-sm-12" />
-        <input
-          type="text"
-          ref={waypointRef}
-          placeholder={ship.nav.waypointSymbol}
-          defaultValue={ship.nav.waypointSymbol}
-        />
-        <button className="col-sm-12" onClick={navigateShip}>
-          Travel
-        </button>
-        <div className="col-sm-12" />
-        <button className="col-sm-12" onClick={orbitShip}>
-          Send ship to orbit
-        </button>
-        <div className="col-sm-12" />
-        <button className="col-sm-12" onClick={dockShip}>
-          Dock ship
-        </button>
-        <div className="col-sm-12" />
-        <button className="col-sm-12" onClick={refuelShip}>
-          Refuel Ship (Must be docked)
-        </button>
-        <div className="col-sm-12" />
-        <button className="col-sm-12" onClick={extractGoods}>
-          Extract (Must be in orbit)
-        </button>
-        <div className="col-sm-12" />
-        <button className="col-sm-12" onClick={listCargo}>
-          List Cargo
-        </button>
-
-        <select className="col-md-8" onChange={handleSelectCargoSymbol}>
-          <option value="">Select cargo to sell</option>
-          {ship.cargo.inventory.map((item, idx) => (
-            <option key={idx} value={item.symbol}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-
-        <select className="col-md-4" onChange={handleSelectCargoQty}>
-          <option value="">Qty</option>
-          {generateQtyOptions()}
-        </select>
-
-        <button className="col-sm-12" onClick={sellCargo}>
-          Sell Cargo
-        </button>
       </div>
+
+      <div className="col-sm-12">
+        <br />
+      </div>
+      <input
+        type="text"
+        ref={waypointRef}
+        placeholder={ship.nav.waypointSymbol}
+        defaultValue={ship.nav.waypointSymbol}
+        className="col-sm-8"
+      />
+      <button className="col-sm-4" onClick={navigateShip}>
+        Travel
+      </button>
+
+      <button className="col-sm-12" onClick={orbitShip}>
+        Send ship to orbit
+      </button>
+      <button className="col-sm-12" onClick={dockShip}>
+        Dock ship
+      </button>
+      <button className="col-sm-12" onClick={refuelShip}>
+        Refuel Ship (Must be docked)
+      </button>
+      <button className="col-sm-12" onClick={extractGoods}>
+        Extract (Must be in orbit)
+      </button>
+      {/* <button className="col-sm-12" onClick={listCargo}>
+        List Cargo
+      </button> */}
+
+      <select className="col-md-8" onChange={handleSelectCargoSymbol}>
+        <option value="">Select cargo to sell</option>
+        {ship.cargo.inventory.map((item, idx) => (
+          <option key={idx} value={item.symbol}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+
+      <select className="col-md-4" onChange={handleSelectCargoQty}>
+        <option value="">Qty</option>
+        {generateQtyOptions()}
+      </select>
+
+      <button className="col-sm-12" onClick={sellCargo}>
+        Sell Cargo (Must be docked)
+      </button>
     </div>
   );
 };

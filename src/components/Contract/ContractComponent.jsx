@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../Context/AuthContext";
 
 const ContractComponent = ({ props }) => {
+  const { token } = useAuth();
   /*****************************************************************************
    *
    * Use States
@@ -29,30 +31,27 @@ const ContractComponent = ({ props }) => {
 
   /*****************************************************************************
    *
-   * URL and Options
-   *
-   ****************************************************************************/
-  const contractAcceptURL = `https://api.spacetraders.io/v2/my/contracts/${contract.id}/accept`;
-  const contractAcceptFetchOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: undefined,
-  };
-
-  /*****************************************************************************
-   *
    * Fetches
    *
    ****************************************************************************/
   const acceptContract = async () => {
+    const url = `https://api.spacetraders.io/v2/my/contracts/${contract.id}/accept`;
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(contractAcceptURL, contractAcceptFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) console.log(data);
+      else {
+        alert(data.error.message);
+      }
     } catch (error) {
       console.log("an error has occurred in acceptContract " + error);
     }

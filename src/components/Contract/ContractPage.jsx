@@ -13,30 +13,26 @@ const ContractPage = () => {
 
   /*****************************************************************************
    *
-   * URL and Options
-   *
-   ****************************************************************************/
-  const contractURL = "https://api.spacetraders.io/v2/my/contracts";
-  const contractFetchOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  /*****************************************************************************
-   *
    * Fetches
    *
    ****************************************************************************/
   const getContracts = async () => {
+    const url = "https://api.spacetraders.io/v2/my/contracts";
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(contractURL, contractFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
-      if (res.ok) {
-        setContracts(data.data);
+      if (res.ok) setContracts(data.data);
+      else {
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in getContracts " + error);
@@ -54,7 +50,9 @@ const ContractPage = () => {
    * useEffect (onMount)
    *
    ****************************************************************************/
-
+  useEffect(() => {
+    getContracts();
+  }, []);
   /*****************************************************************************
    *
    * React stuffs
@@ -71,13 +69,6 @@ const ContractPage = () => {
             ))}
           </div>
           <div className="col-md-1" />
-          {contracts.length === 0 ? (
-            <button className="col-md-12" onClick={getContracts}>
-              Get Contracts
-            </button>
-          ) : (
-            ""
-          )}
         </div>
       ) : (
         "[ Contracts ] Not Logged In Yet"

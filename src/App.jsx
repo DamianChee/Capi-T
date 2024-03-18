@@ -2,6 +2,7 @@ import React from "react";
 import HeaderComponent from "./components/HeaderComponent";
 import BodyComponent from "./components/BodyComponent";
 import FooterComponent from "./components/FooterComponent";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
       <hr />
 
       {/* Body */}
-      <BodyComponent />
-
+      <BrowserRouter>
+        <BodyComponent />
+      </BrowserRouter>
       <hr />
       {/* Footer */}
       <FooterComponent />
