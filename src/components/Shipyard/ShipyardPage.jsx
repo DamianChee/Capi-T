@@ -1,96 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../Context/AuthContext";
+import WaypointComponent from "../SystemsWaypoint/WaypointComponent";
+import ShipyardComponent from "./ShipyardComponent";
 
 const ShipyardPage = () => {
   const { isLoggedIn, token } = useAuth();
-  const shipyardSearchURL =
-    "https://api.spacetraders.io/v2/systems/X1-MC5/waypoints?traits=SHIPYARD";
-  const shipyardSearchFetchOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  const shipyardAvailableShipsURL =
-    "https://api.spacetraders.io/v2/systems/X1-MC5/waypoints/X1-MC5-H55/shipyard";
-  const shipyardAvailableShipsFetchOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  const purchaseShipURL = "https://api.spacetraders.io/v2/my/ships";
-  const purchaseShipFetchOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      shipType: "SHIP_MINING_DRONE",
-      waypointSymbol: "X1-MC5-H55",
-    }),
-  };
+  const [showShipyard, setShowShipyard] = useState(false);
+  const [shipyard, setShipyard] = useState({});
+  const [shipyards, setShipyards] = useState([{}]);
 
   const getShipyards = async () => {
+    const url =
+      "https://api.spacetraders.io/v2/systems/X1-MC5/waypoints?traits=SHIPYARD";
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
     try {
-      const res = await fetch(shipyardSearchURL, shipyardSearchFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
+        setShipyards(data.data);
+      } else {
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in getShipyards " + error);
     }
   };
 
-  const getAvailableShips = async () => {
+  const getAvailableShips = async (waypoint = waypointRef.current.value) => {
+    const url = `https://api.spacetraders.io/v2/systems/X1-MC5/waypoints/${waypoint}/shipyard`;
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(
-        shipyardAvailableShipsURL,
-        shipyardAvailableShipsFetchOptions
-      );
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
+        setShipyard(data.data);
+        setShowShipyard(true);
       }
     } catch (error) {
       console.log("an error occurred in getAvailableShips " + error);
     }
   };
 
-  const buyShip = async () => {
-    try {
-      const res = await fetch(purchaseShipURL, purchaseShipFetchOptions);
-      const data = await res.json();
-      if (res.ok) {
-        console.log(data);
-      }
-    } catch (error) {
-      console.log("an error occurred in buyShip " + error);
-    }
-  };
+  useEffect(() => {
+    getShipyards();
+  }, []);
 
   return (
     <div className="container">
       {isLoggedIn ? (
         <div className="row">
-          <button className="col-md-4" onClick={getShipyards}>
-            Get Shipyards
-          </button>
-          <button className="col-md-4" onClick={getAvailableShips}>
-            Get Available Ships
-          </button>
-          <button className="col-md-4" onClick={buyShip}>
-            Buy Mining Ship
-          </button>
+          <div className="col-md-6 container">
+            <div className="row">
+              <div className="col-md-4">Waypoint</div>
+              <div className="col-md-4">Type</div>
+              <div className="col-md-4" />
+              <div className="col-md-12">
+                <br />
+              </div>
+              {shipyards.map((item, idx) => (
+                <WaypointComponent
+                  props={item}
+                  fn={getAvailableShips}
+                  key={idx}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="col-md-6">
+            {showShipyard && <ShipyardComponent props={shipyard} />}
+          </div>
         </div>
       ) : (
         "[ Shipyard ] Not Logged In Yet"

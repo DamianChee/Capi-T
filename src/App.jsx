@@ -3,6 +3,7 @@ import HeaderComponent from "./components/HeaderComponent";
 import BodyComponent from "./components/BodyComponent";
 import FooterComponent from "./components/FooterComponent";
 import { BrowserRouter } from "react-router-dom";
+import { useAuth } from "./components/Context/AuthContext";
 
 function App() {
   return (

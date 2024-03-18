@@ -18,16 +18,6 @@ const ShipsPage = () => {
    *
    ****************************************************************************/
 
-  const shipsURL = "https://api.spacetraders.io/v2/my/ships";
-  const shipsFetchOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
   /*****************************************************************************
    *
    * Fetches
@@ -35,11 +25,23 @@ const ShipsPage = () => {
    ****************************************************************************/
 
   const getShips = async () => {
+    const url = "https://api.spacetraders.io/v2/my/ships";
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(shipsURL, shipsFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
         setShips(data.data);
+      } else {
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in getShips " + error);

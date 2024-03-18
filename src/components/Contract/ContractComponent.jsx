@@ -93,13 +93,11 @@ const ContractComponent = ({ props }) => {
               <div className="row">
                 <div className="col-sm-1" />
                 <div className="col-sm-11">
-                  On Accept:{" "}
-                  {contract.terms.payment.onAccepted ? "True" : "False"}
+                  On Accept: {contract.terms.payment.onAccepted}
                 </div>
                 <div className="col-sm-1" />
                 <div className="col-sm-11">
-                  On Fulfill:{" "}
-                  {contract.terms.payment.onFulfilled ? "True" : "False"}
+                  On Fulfill: {contract.terms.payment.onFulfilled}
                 </div>
               </div>
             </div>

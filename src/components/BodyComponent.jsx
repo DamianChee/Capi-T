@@ -34,7 +34,6 @@ const BodyComponent = () => {
       const res = await fetch(url, option);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         const temp = [];
         for (let i = 0; i < data.records.length; ++i) {
           temp.push(data.records[i]);
@@ -75,7 +74,6 @@ const BodyComponent = () => {
       const res = await fetch(url, option);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         getAirtable();
       } else {
         console.log(data);
@@ -102,7 +100,6 @@ const BodyComponent = () => {
       const res = await fetch(url, option);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         getAirtable();
       } else {
         console.log(data);

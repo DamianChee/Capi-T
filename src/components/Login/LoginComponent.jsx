@@ -15,22 +15,6 @@ const LoginComponent = ({ deleteAirtableRecord, data }) => {
 
   /*****************************************************************************
    *
-   * URL and Options
-   *
-   ****************************************************************************/
-
-  const loginURL = "https://api.spacetraders.io/v2/my/agent";
-  const loginFetchOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  /*****************************************************************************
-   *
    * Fetches
    *
    ****************************************************************************/
@@ -67,11 +51,9 @@ const LoginComponent = ({ deleteAirtableRecord, data }) => {
    ****************************************************************************/
 
   const handleSelectChange = (event) => {
-    console.log(data);
     const selectedAgent = data.find(
       (record) => record.fields.Name === event.target.value
     );
-    console.log(selectedAgent);
     if (selectedAgent) {
       setToken(selectedAgent.fields.Token);
     } else {
@@ -81,10 +63,7 @@ const LoginComponent = ({ deleteAirtableRecord, data }) => {
 
   const handleOnClick = () => {
     const selectedData = data.find((record) => record.fields.Token === token);
-    console.log(selectedData.id);
-    if (selectedData) {
-      deleteAirtableRecord(selectedData.id);
-    }
+    if (selectedData) deleteAirtableRecord(selectedData.id);
   };
 
   /*****************************************************************************
@@ -110,14 +89,6 @@ const LoginComponent = ({ deleteAirtableRecord, data }) => {
 
       {/* Token input field */}
       <label className="col-md-2">Name:</label>
-      {/* <input
-        type="text"
-        id="token"
-        placeholder="Token"
-        className="col-md-6"
-        value={token}
-        onChange={handleInputChange}
-      /> */}
       <select className="col-md-6" onChange={handleSelectChange}>
         <option value="">Select...</option>
         {data.map((item, idx) => (
@@ -131,7 +102,6 @@ const LoginComponent = ({ deleteAirtableRecord, data }) => {
           Delete
         </button>
       )}
-      {/* <div className="col-md-2" /> */}
 
       {/* Spacer between input and button */}
       <div className="col-md-12">

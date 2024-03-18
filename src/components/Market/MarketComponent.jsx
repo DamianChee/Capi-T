@@ -9,12 +9,6 @@ const MarketComponent = ({ props }) => {
 
   /*****************************************************************************
    *
-   * URL and Options
-   *
-   ****************************************************************************/
-
-  /*****************************************************************************
-   *
    * Fetches
    *
    ****************************************************************************/
@@ -39,7 +33,9 @@ const MarketComponent = ({ props }) => {
   return (
     <div className="container component">
       <div className="row">
-        <div className="col-sm-12 container">
+        <div className="col-sm-12">[{props.symbol}]</div>
+        <div className="col-sm-1" />
+        <div className="col-sm-11 container">
           Exchange:
           <div className="row">
             <div className="col-sm-1" />
@@ -54,7 +50,8 @@ const MarketComponent = ({ props }) => {
             </div>
           </div>
         </div>
-        <div className="col-sm-12 container">
+        <div className="col-sm-1" />
+        <div className="col-sm-11 container">
           Imports:
           <div className="row">
             <div className="col-sm-1" />
@@ -69,7 +66,8 @@ const MarketComponent = ({ props }) => {
             </div>
           </div>
         </div>
-        <div className="col-sm-12 container">
+        <div className="col-sm-1" />
+        <div className="col-sm-11 container">
           Exports:
           <div className="row">
             <div className="col-sm-1" />

@@ -8,11 +8,9 @@ const ShipComponent = ({ props, getShips }) => {
    *
    ****************************************************************************/
 
-  const { token } = useAuth();
+  const { token, getAgent } = useAuth();
 
   const waypointRef = useRef("");
-  const cargoQtyRef = useRef(0);
-  const cargoSymbolRef = useRef("");
 
   const [cargoSymbol, setCargoSymbol] = useState("");
   const [cargoQty, setCargoQty] = useState(0);
@@ -60,99 +58,58 @@ const ShipComponent = ({ props, getShips }) => {
    *
    ****************************************************************************/
 
-  const navigateShipURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/navigate`;
-  const navigateShipFetchOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      waypointSymbol: waypointRef.current.value,
-    }),
-  };
-
-  const orbitShipURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/orbit`;
-  const orbitFetchOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  const dockShipURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/dock`;
-  const dockFetchOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  const extractURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/extract`;
-  const extractFetchOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  const refuelURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/refuel`;
-  const refuelFetchOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  const listCargoURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/cargo`;
-  const listCargoFetchOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  };
-
-  const sellCargoURL = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/sell`;
-  const sellCargoFetchOptions = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      symbol: cargoSymbol,
-      units: cargoQty,
-    }),
-  };
-
   /*****************************************************************************
    *
    * Fetches
    *
    ****************************************************************************/
 
-  const navigateShip = async () => {
-    console.log(navigateShipFetchOptions.body);
+  const getShip = async () => {
+    const url = `https://api.spacetraders.io/v2/my/ships/${shipSymbol}`;
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(navigateShipURL, navigateShipFetchOptions);
+      const res = await fetch(url, options);
+      const data = await res.json();
+      if (res.ok) {
+        setShip(data.data);
+      } else {
+        alert(data.error.message);
+      }
+    } catch (error) {
+      console.log("an error occurred in navigateShip " + error);
+    }
+  };
+
+  const navigateShip = async () => {
+    const url = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/navigate`;
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        waypointSymbol: waypointRef.current.value,
+      }),
+    };
+
+    try {
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
         console.log(data);
         getShips();
       } else {
-        console.log(data.error);
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in navigateShip " + error);
@@ -160,12 +117,23 @@ const ShipComponent = ({ props, getShips }) => {
   };
 
   const orbitShip = async () => {
+    const url = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/orbit`;
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(orbitShipURL, orbitFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         getShips();
+      } else {
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in orbitShip " + error);
@@ -173,12 +141,23 @@ const ShipComponent = ({ props, getShips }) => {
   };
 
   const dockShip = async () => {
+    const url = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/dock`;
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(dockShipURL, dockFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         getShips();
+      } else {
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in dockShip " + error);
@@ -186,15 +165,23 @@ const ShipComponent = ({ props, getShips }) => {
   };
 
   const extractGoods = async () => {
+    const url = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/extract`;
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(extractURL, extractFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         getShips();
       } else {
-        console.log(data.error.message);
-        getShips();
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in extractGoods " + error);
@@ -202,12 +189,23 @@ const ShipComponent = ({ props, getShips }) => {
   };
 
   const refuelShip = async () => {
+    const url = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/refuel`;
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(refuelURL, refuelFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         getShips();
+      } else {
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in refuelShip " + error);
@@ -215,12 +213,23 @@ const ShipComponent = ({ props, getShips }) => {
   };
 
   const listCargo = async () => {
+    const url = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/cargo`;
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
-      const res = await fetch(listCargoURL, listCargoFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         getShips();
+      } else {
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in listCargo " + error);
@@ -228,17 +237,37 @@ const ShipComponent = ({ props, getShips }) => {
   };
 
   const sellCargo = async () => {
-    if (cargoSymbolRef.current.value === "") return;
-    if (!parseInt(cargoQtyRef.current.value)) return;
+    if (cargoSymbol === "") {
+      alert("Cargo item must be selected!");
+      return;
+    }
+    if (cargoQty === "") {
+      alert("Cargo quantity must be selected!");
+      return;
+    }
+
+    const url = `https://api.spacetraders.io/v2/my/ships/${ship.symbol}/sell`;
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        symbol: cargoSymbol,
+        units: cargoQty,
+      }),
+    };
 
     try {
-      const res = await fetch(sellCargoURL, sellCargoFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
-        console.log(data);
         getShips();
+        getAgent();
       } else {
-        console.log(data.error);
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error occurred in sellCargo " + error);
@@ -259,19 +288,6 @@ const ShipComponent = ({ props, getShips }) => {
   const handleSelectCargoQty = (event) => {
     setCargoQty(event.target.value);
   };
-
-  // const handleSelectCargoChange = (event) => {
-  //   if (event.target.value === "") {
-  //     setSelectedCargo({});
-  //     return;
-  //   }
-  //   const selectedSymbol = event.target.value;
-  //   const selectedCargo = cargo.find(
-  //     (cargo) => cargo.symbol === selectedSymbol
-  //   );
-
-  //   setSelectedCargo(selectedCargo);
-  // };
 
   const generateQtyOptions = () => {
     let qty = [];
@@ -364,55 +380,52 @@ const ShipComponent = ({ props, getShips }) => {
         <div className="col-sm-11">
           Extract Cooldown Remaining: {ship.cooldown.remainingSeconds}
         </div>
+
+        <div className="col-sm-12">
+          <br />
+        </div>
+        <input
+          type="text"
+          ref={waypointRef}
+          placeholder={ship.nav.waypointSymbol}
+          defaultValue={ship.nav.waypointSymbol}
+          className="col-sm-8"
+        />
+        <button className="col-sm-4" onClick={navigateShip}>
+          Travel
+        </button>
+
+        <button className="col-sm-12" onClick={orbitShip}>
+          Send ship to orbit
+        </button>
+        <button className="col-sm-12" onClick={dockShip}>
+          Dock ship
+        </button>
+        <button className="col-sm-12" onClick={refuelShip}>
+          Refuel Ship (Must be docked)
+        </button>
+        <button className="col-sm-12" onClick={extractGoods}>
+          Extract (Must be in orbit)
+        </button>
+
+        <select className="col-md-8" onChange={handleSelectCargoSymbol}>
+          <option value="">Select cargo to sell</option>
+          {ship.cargo.inventory.map((item, idx) => (
+            <option key={idx} value={item.symbol}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+
+        <select className="col-md-4" onChange={handleSelectCargoQty}>
+          <option value="">Qty</option>
+          {generateQtyOptions()}
+        </select>
+
+        <button className="col-sm-12" onClick={sellCargo}>
+          Sell Cargo (Must be docked)
+        </button>
       </div>
-
-      <div className="col-sm-12">
-        <br />
-      </div>
-      <input
-        type="text"
-        ref={waypointRef}
-        placeholder={ship.nav.waypointSymbol}
-        defaultValue={ship.nav.waypointSymbol}
-        className="col-sm-8"
-      />
-      <button className="col-sm-4" onClick={navigateShip}>
-        Travel
-      </button>
-
-      <button className="col-sm-12" onClick={orbitShip}>
-        Send ship to orbit
-      </button>
-      <button className="col-sm-12" onClick={dockShip}>
-        Dock ship
-      </button>
-      <button className="col-sm-12" onClick={refuelShip}>
-        Refuel Ship (Must be docked)
-      </button>
-      <button className="col-sm-12" onClick={extractGoods}>
-        Extract (Must be in orbit)
-      </button>
-      {/* <button className="col-sm-12" onClick={listCargo}>
-        List Cargo
-      </button> */}
-
-      <select className="col-md-8" onChange={handleSelectCargoSymbol}>
-        <option value="">Select cargo to sell</option>
-        {ship.cargo.inventory.map((item, idx) => (
-          <option key={idx} value={item.symbol}>
-            {item.name}
-          </option>
-        ))}
-      </select>
-
-      <select className="col-md-4" onChange={handleSelectCargoQty}>
-        <option value="">Qty</option>
-        {generateQtyOptions()}
-      </select>
-
-      <button className="col-sm-12" onClick={sellCargo}>
-        Sell Cargo (Must be docked)
-      </button>
     </div>
   );
 };

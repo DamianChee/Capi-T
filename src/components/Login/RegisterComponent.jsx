@@ -19,32 +19,6 @@ const RegisterComponent = ({ createAirtableRecord }) => {
     description: "",
   });
 
-  // For invalid/problem handling
-
-  /*****************************************************************************
-   *
-   * URL and Options
-   *
-   ****************************************************************************/
-
-  // fetch GET all factions (page 1 of 2 apparently)
-  const factionFetchURL = "https://api.spacetraders.io/v2/factions";
-  const factionFetchOptions = {
-    method: "GET",
-    headers: { Accept: "application/json", "Content-Type": "application/json" },
-  };
-
-  // fetch POST registeration of new agent
-  const registerFetchURL = "https://api.spacetraders.io/v2/register";
-  const registerFetchOptions = {
-    method: "POST",
-    headers: { Accept: "application/json", "Content-Type": "application/json" },
-    body: JSON.stringify({
-      faction: selectedFaction.symbol,
-      symbol: user,
-    }),
-  };
-
   /*****************************************************************************
    *
    * Fetches
@@ -52,24 +26,48 @@ const RegisterComponent = ({ createAirtableRecord }) => {
    ****************************************************************************/
 
   const getFactions = async () => {
+    const url = "https://api.spacetraders.io/v2/factions";
+    const options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
     try {
-      const res = await fetch(factionFetchURL, factionFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
-      setFactions(
-        data.data.map(({ symbol, name, description }) => ({
-          symbol,
-          name,
-          description,
-        }))
-      );
+      if (res.ok)
+        setFactions(
+          data.data.map(({ symbol, name, description }) => ({
+            symbol,
+            name,
+            description,
+          }))
+        );
+      else {
+        alert(data.error.message);
+      }
     } catch (error) {
       console.log("an error has occurred with getFactions " + error);
     }
   };
 
   const registerAgent = async () => {
+    const url = "https://api.spacetraders.io/v2/register";
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        faction: selectedFaction.symbol,
+        symbol: user,
+      }),
+    };
     try {
-      const res = await fetch(registerFetchURL, registerFetchOptions);
+      const res = await fetch(url, options);
       const data = await res.json();
       if (res.ok) {
         console.log(data.data);
@@ -80,7 +78,7 @@ const RegisterComponent = ({ createAirtableRecord }) => {
           data.data.token
         );
       } else {
-        console.log(data);
+        alert(data.error.message);
       }
     } catch (error) {
       console.log("an error has occurred with registerAgent " + error);
