@@ -39,7 +39,9 @@ const UserInfo = () => {
       {userInfo.accountId && (
         <>
           Credits: {userInfo.credits}, {userInfo.symbol}
-          <button onClick={logout}>Logout</button>
+          <a href="/">
+            <button onClick={logout}>Logout</button>
+          </a>
         </>
       )}
     </>
