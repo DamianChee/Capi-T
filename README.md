@@ -41,3 +41,4 @@ Capitalism Terminal (Capi-T) is a React App UI that uses the above API as a lear
 - [Phind](https://www.phind.com/search?home=true)
 - [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 - [Stackoverflow](https://stackoverflow.com/)
+- [Awesome Readme Editor](https://readme.so/editor)
