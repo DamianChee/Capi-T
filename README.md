@@ -1,8 +1,10 @@
 # Capi-T
 
-"SpaceTraders is an API-based game where you acquire and manage a fleet of ships to explore, trade, and fight your way across the galaxy. Use any programming language with our API to control the most powerful fleet in universe."
+> #### Space Traders API
+>
+> "SpaceTraders is an API-based game where you acquire and manage a fleet of ships to explore, trade, and fight your way across the galaxy. Use any programming language with our API to control the most powerful fleet in universe."
 
-Capitalism Terminal is a React App UI that uses the above API as a learning tool to better understand React and API fetches.
+Capitalism Terminal (Capi-T) is a React App UI that uses the above API as a learning tool to better understand React and API fetches. Capi-T was created to interface with the game and allow me to play it, accuring as much credits as possible while the process of making this app has aided me in using as much of what I've learned about React as possible.
 
 ## Features
 
