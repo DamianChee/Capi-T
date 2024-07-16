@@ -24,7 +24,7 @@ const SystemsWaypointPage = () => {
   const [waypoints, setWaypoints] = useState([{}]);
 
   const getWaypoints = async () => {
-    const url = `https://api.spacetraders.io/v2/systems/X1-MC5/waypoints?type=${selectedTypeOfWaypoint}`;
+    const url = `https://api.spacetraders.io/v2/systems/X1-PK72/waypoints?type=${selectedTypeOfWaypoint}`;
     const options = {
       method: "GET",
       headers: {

@@ -24,7 +24,7 @@ const MarketPage = () => {
 
   const getMarketplace = async () => {
     const url =
-      "https://api.spacetraders.io/v2/systems/X1-MC5/waypoints?traits=MARKETPLACE";
+      "https://api.spacetraders.io/v2/systems/X1-PK72/waypoints?traits=MARKETPLACE";
     const options = {
       method: "GET",
       headers: {
@@ -49,7 +49,7 @@ const MarketPage = () => {
   const getWaypointMarketplace = async (
     waypoint = waypointRef.current.value
   ) => {
-    const url = `https://api.spacetraders.io/v2/systems/X1-MC5/waypoints/${waypoint}/market`;
+    const url = `https://api.spacetraders.io/v2/systems/X1-PK72/waypoints/${waypoint}/market`;
     const options = {
       method: "GET",
       headers: {

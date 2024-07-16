@@ -11,7 +11,7 @@ const ShipyardPage = () => {
 
   const getShipyards = async () => {
     const url =
-      "https://api.spacetraders.io/v2/systems/X1-MC5/waypoints?traits=SHIPYARD";
+      "https://api.spacetraders.io/v2/systems/X1-PK72/waypoints?traits=SHIPYARD";
     const options = {
       method: "GET",
       headers: {
@@ -34,7 +34,7 @@ const ShipyardPage = () => {
   };
 
   const getAvailableShips = async (waypoint = waypointRef.current.value) => {
-    const url = `https://api.spacetraders.io/v2/systems/X1-MC5/waypoints/${waypoint}/shipyard`;
+    const url = `https://api.spacetraders.io/v2/systems/X1-PK72/waypoints/${waypoint}/shipyard`;
     const options = {
       method: "GET",
       headers: {
